@@ -6,9 +6,6 @@ import {firestoreConnect} from 'react-redux-firebase';
 
 class AddClients extends Component {
 
-
-
-
     state ={
         firstName: '',
         lastName: '',
@@ -44,6 +41,9 @@ class AddClients extends Component {
 
 
     render(){
+
+
+        const {disableBalanceOnAdd} = this.props.setting;
 
 
         return (
@@ -128,6 +128,7 @@ class AddClients extends Component {
                                     name="balance"
                                     onChange={this.onChange}
                                     value={this.state.balance}
+                                    disabled={disableBalanceOnAdd}
                                 />
                             </div>
                             <input type="submit" value="submit" className="btn btn-primary btn-block"/>
@@ -142,4 +143,9 @@ class AddClients extends Component {
     }
 }
 
-export default firestoreConnect()(AddClients);
+export default compose(
+    firestoreConnect(),
+    connect((state,props) => ({
+        setting : state.setting
+    }))
+)(AddClients);
